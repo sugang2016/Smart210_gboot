@@ -41,6 +41,7 @@ fiq:
 reset:
 	bl set_svc
 	bl disable_watchdog
+	bl disable_interrupt
 
 /*
 *set the cpu to SVC32 mode
@@ -60,6 +61,22 @@ disable_watchdog:
 	mov r1,#0x0
 	str r1,[r0]
 
+/*
+*disable interrupt
+*/
+disable_interrupt:
+	mvn r1,#0x0
+	ldr r0,=0xf2000014
+	str r1,[r0]
+
+	ldr r0,=0xf2100014
+	str r1,[r0]
+
+	ldr r0,=0xf2200014
+	str r1,[r0]
+
+	ldr r0,=0xf2300014
+	str r1,[r0]
 
 
 
