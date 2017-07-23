@@ -42,6 +42,7 @@ reset:
 	bl set_svc
 	bl disable_watchdog
 	bl disable_interrupt
+	bl diable_mmu
 
 /*
 *set the cpu to SVC32 mode
@@ -51,6 +52,7 @@ set_svc:
 	bic r0,r0,#0x1f
 	orr r0,r0,#0xd3
 	msr cpsr r0
+	mov pc,lr
 
 /*
 *disable watchdog
@@ -60,6 +62,7 @@ disable_watchdog:
 	ldr r0,=pWATCH
 	mov r1,#0x0
 	str r1,[r0]
+	mov pc,lr
 
 /*
 *disable interrupt
@@ -77,8 +80,17 @@ disable_interrupt:
 
 	ldr r0,=0xf2300014
 	str r1,[r0]
-
-
+	mov pc,lr
+	
+/*
+*disable mmu
+*/
+diable_mmu:
+	mcr p15,0,r0,c7,c7,0
+	mrc p15,0,r0,c1,c0,0
+	bic r0,r0,	#0x00000007
+	mcr p15,0,r0,c1,c0,0
+	mov pc,lr
 
 
 
