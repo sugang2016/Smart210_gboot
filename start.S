@@ -118,7 +118,7 @@ init_clock:
 	ldr r1,=MPLL_VAL
 	str r1,[r0]
 
-	ldr r0,=MPLL_CON
+	ldr r0,=CLK_SRC
 	ldr r1,=0x1111
 	str r1,[r0]
 
