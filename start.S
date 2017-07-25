@@ -43,6 +43,7 @@ reset:
 	bl disable_watchdog
 	bl disable_interrupt
 	bl diable_mmu
+	bl init_clock
 	bl light_led
 
 /*
@@ -92,6 +93,35 @@ diable_mmu:
 	mrc p15,0,r0,c1,c0,0
 	bic r0,r0,	#0x00000007
 	mcr p15,0,r0,c1,c0,0
+	mov pc,lr
+
+/*
+*init clock
+*/
+#define CLK_DIV0 0xe0100300
+#define DIV_VAL ((0<<0)|(4<<4)|(4<<8)|(1<<12)|(3<<16)|(1<<20)|(4<<24)|(1<<28))
+#define APLL_CON0	0xe0100100
+#define APLL_VAL  ((1<<31)|(125<<16)|(3<<8)|(1<<0))
+#define MPLL_CON	0xe0100108
+#define MPLL_VAL ((1<<31)|(667<<16)|(12<<8)|(1<<0))
+#define CLK_SRC 0xe0100200
+init_clock:
+	ldr r0,=CLK_DIV0
+	ldr r1,=DIV_VAL
+	str r1,[r0]
+
+	ldr r0,=APLL_CON0
+	ldr r1,=APLL_VAL
+	str r1,[r0]
+
+	ldr r0,=MPLL_CON
+	ldr r1,=MPLL_VAL
+	str r1,[r0]
+
+	ldr r0,=MPLL_CON
+	ldr r1,=0x1111
+	str r1,[r0]
+
 	mov pc,lr
 
 /*
