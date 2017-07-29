@@ -46,6 +46,7 @@ reset:
 	bl init_clock
 	bl men_init
 	bl copy_to_ram
+	bl init_stack
 	bl light_led
 
 /*
@@ -136,6 +137,10 @@ copy_loop:
 	str r2,[r1], #4
 	cmp r0,r3
 	bne copy_loop
+	mov pc,lr
+
+init_stack:
+	ldr sp,=0x34000000
 	mov pc,lr
 	
 /*
