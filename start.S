@@ -45,6 +45,7 @@ reset:
 	bl diable_mmu
 	bl init_clock
 	bl men_init
+	bl copy_to_ram
 	bl light_led
 
 /*
@@ -124,7 +125,19 @@ init_clock:
 	str r1,[r0]
 
 	mov pc,lr
+	
+copy_to_ram:
+	ldr r0,=0xd0020000
+	ldr r1,=0x20008000
+	add r3,r0,#1024*4
 
+copy_loop:
+	ldr r2,[r0], #4
+	str r2,[r1], #4
+	cmp r0,r3
+	bne copy_loop
+	mov pc,lr
+	
 /*
 *light led
 */
