@@ -44,6 +44,7 @@ reset:
 	bl disable_interrupt
 	bl diable_mmu
 	bl init_clock
+	bl men_init
 	bl light_led
 
 /*
