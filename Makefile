@@ -1,4 +1,4 @@
-all:	start.o men.o
+all:	start.o men.o main.o
 	arm-linux-ld -Tgboot.lds -o gboot.elf $^
 	arm-linux-objcopy -O binary gboot.elf gboot.bin
 

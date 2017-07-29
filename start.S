@@ -48,7 +48,8 @@ reset:
 	bl copy_to_ram
 	bl init_stack
 	bl clean_bss
-	bl light_led
+	ldr pc,=main
+	@bl light_led
 
 /*
 *set the cpu to SVC32 mode
@@ -145,13 +146,13 @@ init_stack:
 	mov pc,lr
 
 clean_bss:
-	ldr r0,bss_start
-	ldr r1,bs_end
+	ldr r0,=bss_start
+	ldr r1,=bss_end
 	cmp r0,r1
 	moveq pc,lr
 
 clean_loop:
-	ldr r2, #0
+	mov r2, #0
 	str r2,[r0], #4
 	cmp r0,r1
 	bne clean_loop
