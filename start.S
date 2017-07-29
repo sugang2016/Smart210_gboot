@@ -142,7 +142,7 @@ copy_loop:
 	mov pc,lr
 
 init_stack:
-	ldr sp,=0x34000000
+	ldr sp,=0x24000000
 	mov pc,lr
 
 clean_bss:
@@ -156,6 +156,7 @@ clean_loop:
 	str r2,[r0], #4
 	cmp r0,r1
 	bne clean_loop
+	mov pc,lr
 	
 /*
 *light led
