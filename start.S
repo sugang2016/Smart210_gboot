@@ -130,7 +130,7 @@ init_clock:
 	mov pc,lr
 	
 copy_to_ram:
-	ldr r0,=0xd0020000
+	ldr r0,=0xd0020010
 	ldr r1,=0x20008000
 	add r3,r0,#1024*4
 
